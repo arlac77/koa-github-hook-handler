@@ -1,7 +1,6 @@
 {
   "name": "koa-github-hook-handler",
   "version": "0.0.0-semantic-release",
-  "description": "handle github hook requests",
   "publishConfig": {
     "access": "public"
   },
@@ -20,8 +19,8 @@
   "license": "BSD-2-Clause",
   "scripts": {
     "cover": "c8 --temp-directory build/coverage ava && c8 report -r lcov --temp-directory build/coverage",
-    "docs": "documentation readme src/hook-handler.mjs --section=API",
-    "lint": "documentation lint src/hook-handler.mjs",
+    "docs": "documentation readme {{module}} --section=API",
+    "lint": "documentation lint {{module}}",
     "posttest": "markdown-doctest",
     "test": "ava"
   },
@@ -31,7 +30,7 @@
   "devDependencies": {
     "ava": "^1.4.1",
     "c8": "^3.5.0",
-    "documentation": "^9.3.1",
+    "documentation": "^10.0.0",
     "esm": "^3.2.22",
     "got": "^9.6.0",
     "koa": "^2.7.0",
