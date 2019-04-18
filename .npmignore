@@ -1,0 +1,14 @@
+build
+coverage
+tests
+doc
+*.log
+*.tmp
+.test
+.tmp
+.gitignore
+.travis.yml
+.npmignore
+.vscode
+.markdown-doctest-setup.js
+SUMMARY.md

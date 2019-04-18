@@ -1,0 +1,28 @@
+language: node_js
+node_js:
+  - 10.15.3
+  - 11.14.0
+script:
+  - npm run cover
+jobs:
+  include:
+    - stage: docs
+      node_js: lts/*
+      skip_cleanup: 'true'
+      script:
+        - '-npm install -g --production coveralls codecov'
+        - '-cat ./coverage/lcov.info | coveralls'
+        - npm install -g --production codecov
+        - npm run cover
+        - codecov
+        - npm run lint
+        - npm run docs
+    - stage: release
+      node_js: lts/*
+      script: skip
+      deploy:
+        provider: script
+        skip_cleanup: 'true'
+        script:
+          - npx semantic-release
+cache: npm
