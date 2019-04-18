@@ -1,8 +1,11 @@
 import { createHmac } from "crypto";
 import rawBody from "raw-body";
 
-import {} from "../src/hook-handler.mjs";
-
+/**
+ * @param {Object} actions
+ * @param {Object} config
+ * @param {string} config.secret
+ */
 export function createGithubHookHandler(actions, config) {
   return async (ctx, next) => {
     const [sig, event, id] = headers(ctx, [

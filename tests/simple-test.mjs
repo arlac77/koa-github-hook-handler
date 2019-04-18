@@ -1,5 +1,7 @@
 import test from "ava";
-import { createServer } from "../src/server";
+import { createServer } from "http";
+import Koa from "koa";
+import Router from "koa-better-router";
 import got from "got";
 import signer from "x-hub-signature/src/signer";
 import { createGithubHookHandler } from "../src/hook-handler";
@@ -11,23 +13,26 @@ test("request github push", async t => {
 
   let payload;
 
-  const server = await createServer(
-    {
-      http: {
-        port,
-        hook: {
-          path,
-          secret
+  const app = new Koa();
+  const server = createServer(app.callback());
+  const router = Router();
+
+  router.addRoute(
+    "POST",
+    path,
+    createGithubHookHandler(
+      {
+        push: async request => {
+          payload = request;
+          return { ok: true };
         }
-      }
-    },
-    sd,
-    {
-      add(event) {
-        payload = event;
-      }
-    }
+      },
+      { secret }
+    )
   );
+
+  app.use(router.middleware());
+  app.listen(port);
 
   const sign = signer({ algorithm: "sha1", secret });
   const signature = sign(new Buffer(pushBody));
@@ -41,10 +46,6 @@ test("request github push", async t => {
     },
     body: pushBody
   });
-
-  //console.log(payload);
-
-  //console.log(response.body);
 
   t.is(response.statusCode, 200);
   t.is(payload.ref, "refs/heads/template-sync-1");
