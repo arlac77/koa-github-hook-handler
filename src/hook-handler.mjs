@@ -2,11 +2,18 @@ import { createHmac } from "crypto";
 import rawBody from "raw-body";
 
 /**
+ * @typedef {Function} Handler
+ * @param {Context} ctx
+ * @param {Function} next
+ */
+
+/**
  * @param {Object} actions
  * @param {Object} config
- * @param {string} config.secret
+ * @param {string} config.secret to decode signature
+ * @return {Handler}
  */
-export function createGithubHookHandler(actions, config) {
+export function createGithubHookHandler(actions, config = {}) {
   return async (ctx, next) => {
     const [sig, event, id] = headers(ctx, [
       "x-hub-signature",
@@ -17,7 +24,7 @@ export function createGithubHookHandler(actions, config) {
     const body = await rawBody(ctx.req);
 
     if (!verify(sig, body, config.secret)) {
-      ctx.throw("X-Hub-Signature does not match blob signature");
+      ctx.throw("x-hub-signature does not match blob signature");
     }
 
     const handler = actions[event];
