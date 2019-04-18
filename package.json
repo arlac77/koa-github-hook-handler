@@ -1,0 +1,10 @@
+{
+  "name": "koa-github-hook-handler",
+  "dependencies": {
+    "raw-body": "^2.4.0"
+  },
+  "devDependencies": {
+    "got": "^9.6.0",
+    "x-hub-signature": "^1.2.0"
+  }
+}
