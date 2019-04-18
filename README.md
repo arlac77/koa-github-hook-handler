@@ -22,16 +22,29 @@ handle github hook requests
 
 ### Table of Contents
 
--   [createGithubHookHandler](#creategithubhookhandler)
+-   [Handler](#handler)
     -   [Parameters](#parameters)
+-   [createGithubHookHandler](#creategithubhookhandler)
+    -   [Parameters](#parameters-1)
+
+## Handler
+
+Type: [Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)
+
+### Parameters
+
+-   `ctx` **Context** 
+-   `next` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** 
 
 ## createGithubHookHandler
 
 ### Parameters
 
 -   `actions` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
--   `config` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
-    -   `config.secret` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+-   `config` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**  (optional, default `{}`)
+    -   `config.secret` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** to decode signature
+
+Returns **[Handler](#handler)** 
 
 # install
 
