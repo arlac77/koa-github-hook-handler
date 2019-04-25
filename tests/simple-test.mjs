@@ -4,7 +4,7 @@ import Koa from "koa";
 import Router from "koa-better-router";
 import got from "got";
 import signer from "x-hub-signature/src/signer";
-import { createGithubHookHandler } from "../src/hook-handler";
+import { createGithubHookHandler } from "../src/hook-handler.mjs";
 
 test("request github push", async t => {
   const port = "3153";

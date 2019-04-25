@@ -11,7 +11,7 @@ import rawBody from "raw-body";
  * @param {Object} actions
  * @param {Object} config
  * @param {string} config.secret to decode signature
- * @return {Handler}
+ * @return {Function} suitable as koa middleware
  */
 export function createGithubHookHandler(actions, config = {}) {
   return async (ctx, next) => {
