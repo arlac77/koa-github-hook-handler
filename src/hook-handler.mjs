@@ -8,7 +8,8 @@ import rawBody from "raw-body";
  */
 
 /**
- * @param {Object} actions
+ * Create a koa middleware suitable to bridge webhook requests to Handlers
+ * @param {Object} actions holding all the handles for the events (event is the key)
  * @param {Object} config
  * @param {string} config.secret to decode signature
  * @return {Function} suitable as koa middleware
