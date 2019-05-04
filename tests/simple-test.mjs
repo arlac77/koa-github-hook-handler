@@ -22,9 +22,41 @@ function createHookServer(handler, port) {
   return server;
 }
 
-test("request github push", async t => {
+test.only("request github push invlid signature", async t => {
   let payload;
   const port = "3153";
+
+  const server = createHookServer(
+    {
+      push: async request => {
+        payload = request;
+        return { ok: true };
+      }
+    },
+    port
+  );
+
+  try {
+    const response = await got.post(`http://localhost:${port}/${path}`, {
+      headers: {
+        "X-Hub-Signature": "invalid",
+        "content-type": "application/json",
+        "X-GitHub-Delivery": "7453c7ec-5fa2-11e9-9af1-60fccbf37b5b",
+        "X-GitHub-Event": "push"
+      },
+      body: githubPushBody
+    });
+  } catch (e) {
+    //console.log(e);
+    t.is(e.statusCode, 401);
+  }
+
+  server.close();
+});
+
+test("request github push", async t => {
+  let payload;
+  const port = "3154";
 
   const server = createHookServer(
     {
@@ -57,7 +89,7 @@ test("request github push", async t => {
 
 test("request gitea push", async t => {
   let payload;
-  const port = "3154";
+  const port = "3155";
 
   const server = createHookServer(
     {
@@ -86,7 +118,7 @@ test("request gitea push", async t => {
     body: giteaPushBody
   });
 
-  t.is(response.statusCode, 200);
+  t.is(response.statusCode, statusCode);
   t.is(payload.ref, "refs/heads/master");
 
   server.close();

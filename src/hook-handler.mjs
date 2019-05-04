@@ -25,7 +25,7 @@ export function createGithubHookHandler(actions, config = {}) {
     const body = await rawBody(ctx.req);
 
     if (!verify(sig, body, config.secret)) {
-      ctx.throw("x-hub-signature does not match blob signature");
+      ctx.throw(401, "x-hub-signature does not match blob signature");
     }
 
     const handler = actions[event];
