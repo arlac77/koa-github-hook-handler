@@ -2,17 +2,25 @@ import { createHmac } from "crypto";
 import rawBody from "raw-body";
 
 /**
- * @typedef {Function} Handler
+ * @typedef {Function} KoaHandler
  * @param {Context} ctx
  * @param {Function} next
  */
 
 /**
+ * @typedef {Function} WebhookHandler
+ * @param {Object} request decoded request body
+ * @param {string} event
+ * @param {Context} ctx
+ */
+
+/**
  * Create a koa middleware suitable to bridge webhook requests to Handlers
  * @param {Object} actions holding all the handles for the events (event is the key)
+ * @param {WebhookHandler} actions.event  (event is the key)
  * @param {Object} config
  * @param {string} config.secret to decode signature
- * @return {Function} suitable as koa middleware
+ * @return {KoaHandler} suitable as koa middleware
  */
 export function createGithubHookHandler(actions, config = {}) {
   return async (ctx, next) => {
@@ -32,7 +40,7 @@ export function createGithubHookHandler(actions, config = {}) {
 
     if (handler !== undefined) {
       const data = JSON.parse(body.toString());
-      ctx.body = handler(data);
+      ctx.body = handler(data, event, ctx);
     } else {
       ctx.throw(`unknown event type ${event}`);
     }

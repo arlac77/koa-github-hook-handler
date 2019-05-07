@@ -28,7 +28,7 @@ test.only("request github push invlid signature", async t => {
 
   const server = createHookServer(
     {
-      push: async request => {
+      push: async (request, event) => {
         payload = request;
         return { ok: true };
       }
@@ -55,13 +55,14 @@ test.only("request github push invlid signature", async t => {
 });
 
 test("request github push", async t => {
-  let payload;
+  let payload, event;
   const port = "3154";
 
   const server = createHookServer(
     {
-      push: async request => {
+      push: async (request, e) => {
         payload = request;
+        event = e;
         return { ok: true };
       }
     },
@@ -82,6 +83,7 @@ test("request github push", async t => {
   });
 
   t.is(response.statusCode, 200);
+  t.is(event, "push");
   t.is(payload.ref, "refs/heads/template-sync-1");
 
   server.close();
