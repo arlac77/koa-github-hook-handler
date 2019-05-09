@@ -37,7 +37,7 @@
     "koa": "^2.7.0",
     "koa-better-router": "^2.1.1",
     "markdown-doctest": "^0.9.1",
-    "semantic-release": "^15.13.12",
+    "semantic-release": "^15.13.13",
     "x-hub-signature": "^1.2.0"
   },
   "engines": {
