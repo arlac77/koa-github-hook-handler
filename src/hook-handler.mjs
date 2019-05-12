@@ -10,12 +10,12 @@ import rawBody from "raw-body";
 /**
  * @typedef {Function} WebhookHandler
  * @param {Object} request decoded request body
- * @param {string} event
- * @param {Context} ctx
+ * @param {string} event from 'x-github-event' header
+ * @param {Context} ctx from koa
  */
 
 /**
- * Create a koa middleware suitable to bridge webhook requests to Handlers
+ * Create a koa middleware suitable to bridge webhook requests to KoaHandlers
  * @param {Object} actions holding all the handles for the events (event is the key)
  * @param {WebhookHandler} actions.event  (event is the key)
  * @param {Object} config
@@ -36,7 +36,7 @@ export function createGithubHookHandler(actions, config = {}) {
       ctx.throw(401, "x-hub-signature does not match blob signature");
     }
 
-    const handler = actions[event];
+    const handler = actions[event] || actions.default;
 
     if (handler !== undefined) {
       const data = JSON.parse(body.toString());
