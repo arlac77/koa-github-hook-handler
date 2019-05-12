@@ -22,7 +22,7 @@ function createHookServer(handler, port) {
   return server;
 }
 
-test.only("request github push invlid signature", async t => {
+test("request github push invlid signature", async t => {
   let payload;
   const port = "3153";
 
