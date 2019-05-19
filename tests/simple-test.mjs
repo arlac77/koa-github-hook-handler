@@ -4,17 +4,24 @@ import Koa from "koa";
 import Router from "koa-better-router";
 import got from "got";
 import signer from "x-hub-signature/src/signer";
-import { createGithubHookHandler } from "../src/hook-handler.mjs";
+import {
+  createGithubHookHandler,
+  createGiteaHookHandler
+} from "../src/hook-handler.mjs";
 
 const secret = "aSecret";
 const path = "webhook";
 
-function createHookServer(handler, port) {
+function createHookServer(
+  handler,
+  port,
+  hookHandler = createGithubHookHandler
+) {
   const app = new Koa();
   const server = createServer(app.callback());
   const router = Router();
 
-  router.addRoute("POST", path, createGithubHookHandler(handler, { secret }));
+  router.addRoute("POST", path, hookHandler(handler, { secret }));
 
   app.use(router.middleware());
   app.listen(port);
@@ -22,7 +29,7 @@ function createHookServer(handler, port) {
   return server;
 }
 
-test.only("request github push missing signature", async t => {
+test("request github push missing signature", async t => {
   let payload;
   const port = "3152";
 
@@ -119,7 +126,7 @@ test("request github push", async t => {
   server.close();
 });
 
-test("request gitea push", async t => {
+test.only("request gitea push", async t => {
   let payload;
   const port = "3155";
 
@@ -130,15 +137,12 @@ test("request gitea push", async t => {
         return { ok: true };
       }
     },
-    port
+    port,
+    createGiteaHookHandler
   );
-
-  const sign = signer({ algorithm: "sha1", secret });
-  const signature = sign(new Buffer(giteaPushBody));
 
   const response = await got.post(`http://localhost:${port}/${path}`, {
     headers: {
-      "X-Hub-Signature": signature,
       "content-type": "application/json",
       "X-GitHub-Delivery": "2c61f3cb-aab8-4a5b-bc81-7e964f5209d4",
       "X-GitHub-Event": "push",
