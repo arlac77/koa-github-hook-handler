@@ -51,7 +51,7 @@ export function createGithubHookHandler(actions, config = {}) {
 function headers(ctx, names) {
   return names.map(name => {
     const v = ctx.get(name);
-    if (v === undefined) {
+    if (v === undefined || v.length === 0) {
       ctx.throw(400, `${name} required`);
     }
     return v;

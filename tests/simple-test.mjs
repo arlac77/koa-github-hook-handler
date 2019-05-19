@@ -22,7 +22,37 @@ function createHookServer(handler, port) {
   return server;
 }
 
-test("request github push invlid signature", async t => {
+test.only("request github push missing signature", async t => {
+  let payload;
+  const port = "3152";
+
+  const server = createHookServer(
+    {
+      push: async (request, event) => {
+        payload = request;
+        return { ok: true };
+      }
+    },
+    port
+  );
+
+  try {
+    const response = await got.post(`http://localhost:${port}/${path}`, {
+      headers: {
+        "content-type": "application/json",
+        "X-GitHub-Delivery": "7453c7ec-5fa2-11e9-9af1-60fccbf37b5b",
+        "X-GitHub-Event": "push"
+      },
+      body: githubPushBody
+    });
+  } catch (e) {
+    t.is(e.statusCode, 400);
+  }
+
+  server.close();
+});
+
+test("request github push invalid signature", async t => {
   let payload;
   const port = "3153";
 
@@ -120,7 +150,7 @@ test("request gitea push", async t => {
     body: giteaPushBody
   });
 
-  t.is(response.statusCode, statusCode);
+  t.is(response.statusCode, 200);
   t.is(payload.ref, "refs/heads/master");
 
   server.close();
