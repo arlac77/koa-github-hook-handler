@@ -126,7 +126,7 @@ test("request github push", async t => {
   server.close();
 });
 
-test.only("request gitea push", async t => {
+test("request gitea push", async t => {
   let payload;
   const port = "3155";
 
