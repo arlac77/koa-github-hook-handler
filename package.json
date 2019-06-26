@@ -31,14 +31,14 @@
   },
   "devDependencies": {
     "ava": "^2.1.0",
-    "c8": "^5.0.1",
+    "c8": "^5.0.2",
     "documentation": "^11.0.1",
     "esm": "^3.2.25",
     "got": "^9.6.0",
     "koa": "^2.7.0",
     "koa-better-router": "^2.1.1",
     "markdown-doctest": "^0.9.1",
-    "semantic-release": "^15.13.16",
+    "semantic-release": "^15.13.17",
     "x-hub-signature": "^1.2.0"
   },
   "engines": {
