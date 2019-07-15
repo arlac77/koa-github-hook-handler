@@ -120,6 +120,8 @@ test("request github push", async t => {
   });
 
   t.is(response.statusCode, 200);
+  t.deepEqual(JSON.parse(response.body), { ok: true });
+
   t.is(event, "push");
   t.is(payload.ref, "refs/heads/template-sync-1");
 
@@ -155,6 +157,8 @@ test("request gitea push", async t => {
   });
 
   t.is(response.statusCode, 200);
+  t.deepEqual(JSON.parse(response.body), { ok: true });
+
   t.is(payload.ref, "refs/heads/master");
 
   server.close();

@@ -15,7 +15,7 @@ import rawBody from "raw-body";
  */
 
 /**
- * Create a koa middleware suitable to bridge webhook requests to KoaHandlers
+ * Create a koa middleware suitable to bridge github webhook requests to KoaHandlers
  * @param {Object} actions holding all the handles for the events (event is the key)
  * @param {WebhookHandler} actions.event  (event is the key)
  * @param {Object} config
@@ -40,7 +40,7 @@ export function createGithubHookHandler(actions, config = {}) {
 
     if (handler !== undefined) {
       const data = JSON.parse(body.toString());
-      ctx.body = handler(data, event, ctx);
+      ctx.body = await handler(data, event, ctx);
     } else {
       ctx.throw(`unknown event type ${event}`);
     }
@@ -70,7 +70,7 @@ export function createGiteaHookHandler(actions, config = {}) {
     const handler = actions[event] || actions.default;
 
     if (handler !== undefined) {
-      ctx.body = handler(data, event, ctx);
+      ctx.body = await handler(data, event, ctx);
     } else {
       ctx.throw(`unknown event type ${event}`);
     }
