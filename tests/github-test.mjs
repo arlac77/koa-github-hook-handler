@@ -1,35 +1,13 @@
 import test from "ava";
-import { createServer } from "http";
-import Koa from "koa";
-import Router from "koa-better-router";
 import got from "got";
 import signer from "x-hub-signature/src/signer";
 import {
   createGithubHookHandler,
-  createGiteaHookHandler
 } from "../src/hook-handler.mjs";
 
-const secret = "aSecret";
-const path = "webhook";
+import { secret, path, createHookServer } from './util.mjs';
 
-function createHookServer(
-  handler,
-  port,
-  hookHandler = createGithubHookHandler
-) {
-  const app = new Koa();
-  const server = createServer(app.callback());
-  const router = Router();
-
-  router.addRoute("POST", path, hookHandler(handler, { secret }));
-
-  app.use(router.middleware());
-  app.listen(port);
-
-  return server;
-}
-
-test("request github push missing signature", async t => {
+test("github push missing signature", async t => {
   let payload;
   const port = "3152";
 
@@ -40,7 +18,8 @@ test("request github push missing signature", async t => {
         return { ok: true };
       }
     },
-    port
+    port,
+    createGithubHookHandler
   );
 
   try {
@@ -59,7 +38,7 @@ test("request github push missing signature", async t => {
   server.close();
 });
 
-test("request github push invalid signature", async t => {
+test("github push invalid signature", async t => {
   let payload;
   const port = "3153";
 
@@ -70,7 +49,8 @@ test("request github push invalid signature", async t => {
         return { ok: true };
       }
     },
-    port
+    port,
+    createGithubHookHandler
   );
 
   try {
@@ -91,7 +71,7 @@ test("request github push invalid signature", async t => {
   server.close();
 });
 
-test("request github push", async t => {
+test("github push", async t => {
   let payload, event;
   const port = "3154";
 
@@ -103,7 +83,8 @@ test("request github push", async t => {
         return { ok: true };
       }
     },
-    port
+    port,
+    createGithubHookHandler
   );
 
   const sign = signer({ algorithm: "sha1", secret });
@@ -128,41 +109,6 @@ test("request github push", async t => {
   server.close();
 });
 
-test("request gitea push", async t => {
-  let payload;
-  const port = "3155";
-
-  const server = createHookServer(
-    {
-      push: async request => {
-        payload = request;
-        return { ok: true };
-      }
-    },
-    port,
-    createGiteaHookHandler
-  );
-
-  const response = await got.post(`http://localhost:${port}/${path}`, {
-    headers: {
-      "content-type": "application/json",
-      "X-GitHub-Delivery": "2c61f3cb-aab8-4a5b-bc81-7e964f5209d4",
-      "X-GitHub-Event": "push",
-      "X-Gitea-Delivery": "2c61f3cb-aab8-4a5b-bc81-7e964f5209d4",
-      "X-Gitea-Event": "push",
-      "X-Gogs-Delivery": "2c61f3cb-aab8-4a5b-bc81-7e964f5209d4",
-      "X-Gogs-Event": "push"
-    },
-    body: giteaPushBody
-  });
-
-  t.is(response.statusCode, 200);
-  t.deepEqual(JSON.parse(response.body), { ok: true });
-
-  t.is(payload.ref, "refs/heads/master");
-
-  server.close();
-});
 
 const githubPushBody = JSON.stringify({
   ref: "refs/heads/template-sync-1",
@@ -346,91 +292,3 @@ const githubPushBody = JSON.stringify({
   }
 });
 
-const giteaPushBody = JSON.stringify({
-  secret: secret,
-  ref: "refs/heads/master",
-  before: "32d15dcc85bae9e1305d4cca8273bc503caa4ee6",
-  after: "32d15dcc85bae9e1305d4cca8273bc503caa4ee6",
-  compare_url: "",
-  commits: [
-    {
-      id: "32d15dcc85bae9e1305d4cca8273bc503caa4ee6",
-      message: "fix: focus Software Delivery Pipelines",
-      url:
-        "https://mfelten.dynv6.net/services/git/markus/de.mfelten.profile/commit/32d15dcc85bae9e1305d4cca8273bc503caa4ee6",
-      author: {
-        name: "Markus Felten",
-        email: "Markus.Felten@gmx.de",
-        username: ""
-      },
-      committer: {
-        name: "Markus Felten",
-        email: "Markus.Felten@gmx.de",
-        username: ""
-      },
-      verification: null,
-      timestamp: "0001-01-01T00:00:00Z"
-    }
-  ],
-  repository: {
-    id: 3,
-    owner: {
-      id: 1,
-      login: "markus",
-      full_name: "Markus Felten",
-      email: "markus.felten@gmx.de",
-      avatar_url:
-        "https://mfelten.dynv6.net/services/git/avatars/de9573e5d207b9078f1b70008df608d7",
-      language: "de-DE",
-      username: "markus"
-    },
-    name: "de.mfelten.profile",
-    full_name: "markus/de.mfelten.profile",
-    description: "",
-    empty: false,
-    private: false,
-    fork: false,
-    parent: null,
-    mirror: false,
-    size: 174,
-    html_url:
-      "https://mfelten.dynv6.net/services/git/markus/de.mfelten.profile",
-    ssh_url: "git@mfelten.dynv6.net:markus/de.mfelten.profile.git",
-    clone_url:
-      "https://mfelten.dynv6.net/services/git/markus/de.mfelten.profile.git",
-    website: "",
-    stars_count: 0,
-    forks_count: 0,
-    watchers_count: 1,
-    open_issues_count: 0,
-    default_branch: "master",
-    archived: false,
-    created_at: "2018-08-08T14:06:14+02:00",
-    updated_at: "2019-04-26T08:19:25+02:00",
-    permissions: {
-      admin: false,
-      push: false,
-      pull: false
-    }
-  },
-  pusher: {
-    id: 1,
-    login: "markus",
-    full_name: "Markus Felten",
-    email: "markus.felten@gmx.de",
-    avatar_url:
-      "https://mfelten.dynv6.net/services/git/avatars/de9573e5d207b9078f1b70008df608d7",
-    language: "de-DE",
-    username: "markus"
-  },
-  sender: {
-    id: 1,
-    login: "markus",
-    full_name: "Markus Felten",
-    email: "markus.felten@gmx.de",
-    avatar_url:
-      "https://mfelten.dynv6.net/services/git/avatars/de9573e5d207b9078f1b70008df608d7",
-    language: "de-DE",
-    username: "markus"
-  }
-});

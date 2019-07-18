@@ -78,6 +78,32 @@ export function createGiteaHookHandler(actions, config = {}) {
   };
 }
 
+/**
+ * Create a koa middleware suitable to bridge gitea webhook requests to KoaHandlers
+ * @param {Object} actions holding all the handles for the events (event is the key)
+ * @param {WebhookHandler} actions.event  (event is the key)
+ * @param {Object} config
+ * @param {string} config.secret to decode signature
+ * @return {KoaHandler} suitable as koa middleware
+ */
+export function createBitbucketHookHandler(actions, config = {}) {
+  return async (ctx, next) => {
+    const [event] = headers(ctx, ["X-Event-Key"]);
+
+    const body = await rawBody(ctx.req);
+    const data = JSON.parse(body.toString());
+
+    const handler = actions[event] || actions.default;
+
+    if (handler !== undefined) {
+      ctx.body = await handler(data, event, ctx);
+    } else {
+      ctx.throw(`unknown event type ${event}`);
+    }
+    return next();
+  };
+}
+
 function headers(ctx, names) {
   return names.map(name => {
     const v = ctx.get(name);
