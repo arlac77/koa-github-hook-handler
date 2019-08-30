@@ -7,11 +7,12 @@
   },
   "main": "src/hook-handler.mjs",
   "module": "src/hook-handler.mjs",
-  "description": "handle github/gitea webhook requests",
+  "description": "handle github/gitea/bitbucket webhook requests",
   "keywords": [
     "github",
     "hook",
-    "gitea"
+    "gitea",
+    "bitbucket"
   ],
   "contributors": [
     {

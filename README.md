@@ -14,7 +14,7 @@
 
 ## koa-github-hook-handler
 
-handle github/gitea requests
+handle github/gitea/bitbucket requests
 
 <!-- skip-example -->
 
