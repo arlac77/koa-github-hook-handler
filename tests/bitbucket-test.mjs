@@ -2,24 +2,38 @@ import test from "ava";
 import got from "got";
 import { createBitbucketHookHandler } from "../src/hook-handler.mjs";
 
-import { secret, path, createHookServer } from "./util.mjs";
+import { path, createHookServer } from "./util.mjs";
 
-test("bitbucket push", async t => {
-  let payload;
-  const port = "3156";
+let port = 3156;
 
-  const server = createHookServer(
+test.before(async t => {
+  port++;
+
+  t.context.port = port;
+  t.context.url = `http://localhost:${port}/${path}`;
+
+  const payload = {};
+
+  t.context.payload = payload;
+  t.context.server = createHookServer(
     {
-        "repo:push": async request => {
-        payload = request;
+      "repo:push": async request => {
+        payload.repository = request.repository;
         return { ok: true };
       }
     },
     port,
     createBitbucketHookHandler
   );
+});
 
-  const response = await got.post(`http://localhost:${port}/${path}`, {
+test.after.always(async t => {
+  t.context.server.close();
+  t.context.server.unref();
+});
+
+test("bitbucket push", async t => {
+  const response = await got.post(t.context.url, {
     headers: {
       "X-Request-UUID": "e7a1daa7-a80d-4353-8c9b-32f728d89086",
       "X-Event-Key": "repo:push",
@@ -35,9 +49,7 @@ test("bitbucket push", async t => {
   t.is(response.statusCode, 200);
   t.deepEqual(JSON.parse(response.body), { ok: true });
 
-  t.is(payload.repository.name, "npm-package-template");
-
-  server.close();
+  t.is(t.context.payload.repository.name, "npm-package-template");
 });
 
 const bitbucketPushBody = JSON.stringify({

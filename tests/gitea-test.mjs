@@ -4,22 +4,36 @@ import { createGiteaHookHandler } from "../src/hook-handler.mjs";
 
 import { secret, path, createHookServer } from "./util.mjs";
 
-test("gitea push", async t => {
-  let payload;
-  const port = "3155";
+let port = 3155;
 
-  const server = createHookServer(
+test.before(async t => {
+  port++;
+
+  t.context.port = port;
+  t.context.url = `http://localhost:${port}/${path}`;
+
+  const payload = {};
+
+  t.context.payload = payload;
+  t.context.server = createHookServer(
     {
       push: async request => {
-        payload = request;
+        payload.ref = request.ref;
         return { ok: true };
       }
     },
     port,
     createGiteaHookHandler
   );
+});
 
-  const response = await got.post(`http://localhost:${port}/${path}`, {
+test.after.always(async t => {
+  t.context.server.close();
+  t.context.server.unref();
+});
+
+test("gitea push", async t => {
+  const response = await got.post(t.context.url, {
     headers: {
       "content-type": "application/json",
       "X-GitHub-Delivery": "2c61f3cb-aab8-4a5b-bc81-7e964f5209d4",
@@ -35,9 +49,7 @@ test("gitea push", async t => {
   t.is(response.statusCode, 200);
   t.deepEqual(JSON.parse(response.body), { ok: true });
 
-  t.is(payload.ref, "refs/heads/master");
-
-  server.close();
+  t.is(t.context.payload.ref, "refs/heads/master");
 });
 
 const giteaPushBody = JSON.stringify({

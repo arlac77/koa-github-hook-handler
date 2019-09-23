@@ -1,29 +1,41 @@
 import test from "ava";
 import got from "got";
 import signer from "x-hub-signature/src/signer";
-import {
-  createGithubHookHandler,
-} from "../src/hook-handler.mjs";
+import { createGithubHookHandler } from "../src/hook-handler.mjs";
 
-import { secret, path, createHookServer } from './util.mjs';
+import { secret, path, createHookServer } from "./util.mjs";
 
-test("github push missing signature", async t => {
-  let payload;
-  const port = "3152";
+let port = 3152;
 
-  const server = createHookServer(
+test.before(async t => {
+  port++;
+
+  t.context.port = port;
+  t.context.url = `http://localhost:${port}/${path}`;
+
+  const payload = {};
+  t.context.payload = payload;
+  t.context.server = createHookServer(
     {
       push: async (request, event) => {
-        payload = request;
+        payload.ref = request.ref;
+        payload.event = event;
         return { ok: true };
       }
     },
     port,
     createGithubHookHandler
   );
+});
 
+test.after.always(async t => {
+  t.context.server.close();
+  t.context.server.unref();
+});
+
+test("github push missing signature", async t => {
   try {
-    const response = await got.post(`http://localhost:${port}/${path}`, {
+    const response = await got.post(t.context.url, {
       headers: {
         "content-type": "application/json",
         "X-GitHub-Delivery": "7453c7ec-5fa2-11e9-9af1-60fccbf37b5b",
@@ -34,27 +46,11 @@ test("github push missing signature", async t => {
   } catch (e) {
     t.is(e.statusCode, 400);
   }
-
-  server.close();
 });
 
 test("github push invalid signature", async t => {
-  let payload;
-  const port = "3153";
-
-  const server = createHookServer(
-    {
-      push: async (request, event) => {
-        payload = request;
-        return { ok: true };
-      }
-    },
-    port,
-    createGithubHookHandler
-  );
-
   try {
-    const response = await got.post(`http://localhost:${port}/${path}`, {
+    const response = await got.post(t.context.url, {
       headers: {
         "X-Hub-Signature": "invalid",
         "content-type": "application/json",
@@ -64,33 +60,15 @@ test("github push invalid signature", async t => {
       body: githubPushBody
     });
   } catch (e) {
-    //console.log(e);
     t.is(e.statusCode, 401);
   }
-
-  server.close();
 });
 
 test("github push", async t => {
-  let payload, event;
-  const port = "3154";
-
-  const server = createHookServer(
-    {
-      push: async (request, e) => {
-        payload = request;
-        event = e;
-        return { ok: true };
-      }
-    },
-    port,
-    createGithubHookHandler
-  );
-
   const sign = signer({ algorithm: "sha1", secret });
   const signature = sign(new Buffer(githubPushBody));
 
-  const response = await got.post(`http://localhost:${port}/${path}`, {
+  const response = await got.post(t.context.url, {
     headers: {
       "X-Hub-Signature": signature,
       "content-type": "application/json",
@@ -103,12 +81,9 @@ test("github push", async t => {
   t.is(response.statusCode, 200);
   t.deepEqual(JSON.parse(response.body), { ok: true });
 
-  t.is(event, "push");
-  t.is(payload.ref, "refs/heads/template-sync-1");
-
-  server.close();
+  t.is(t.context.payload.event, "push");
+  t.is(t.context.payload.ref, "refs/heads/template-sync-1");
 });
-
 
 const githubPushBody = JSON.stringify({
   ref: "refs/heads/template-sync-1",
@@ -291,4 +266,3 @@ const githubPushBody = JSON.stringify({
     site_admin: false
   }
 });
-
