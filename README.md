@@ -26,6 +26,7 @@ import { createGithubHookHandler } from "koa-github-hook-handler";
 ...
 
 const router = Router();
+const secret = "...";
 
 router.addRoute(
   "POST",
