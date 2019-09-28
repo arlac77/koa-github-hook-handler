@@ -9,6 +9,7 @@
   "module": "src/hook-handler.mjs",
   "description": "handle github/gitea/bitbucket webhook requests",
   "keywords": [
+    "koa",
     "github",
     "hook",
     "gitea",
