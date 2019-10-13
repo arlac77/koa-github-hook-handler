@@ -40,7 +40,7 @@
     "got": "^9.6.0",
     "koa": "^2.8.2",
     "koa-better-router": "^2.1.1",
-    "markdown-doctest": "^0.9.1",
+    "markdown-doctest": "^1.0.0",
     "semantic-release": "^15.13.26",
     "x-hub-signature": "^1.2.0"
   },
