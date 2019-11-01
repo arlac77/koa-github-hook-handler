@@ -38,7 +38,7 @@
     "documentation": "^12.1.2",
     "esm": "^3.2.25",
     "got": "^9.6.0",
-    "koa": "^2.10.0",
+    "koa": "^2.11.0",
     "koa-better-router": "^2.1.1",
     "markdown-doctest": "^1.0.0",
     "semantic-release": "^15.13.28",
