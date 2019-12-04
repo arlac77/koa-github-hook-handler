@@ -1,10 +1,11 @@
 {
   "name": "koa-github-hook-handler",
   "version": "0.0.0-semantic-release",
-  "type": "module",
   "publishConfig": {
     "access": "public"
   },
+  "sideEffects": false,
+  "type": "module",
   "main": "src/hook-handler.mjs",
   "module": "src/hook-handler.mjs",
   "description": "handle github/gitea/bitbucket webhook requests",
@@ -72,6 +73,5 @@
     "repository": {
       "url": "https://github.com/arlac77/npm-package-template-esm-only.git"
     }
-  },
-  "sideEffects": false
+  }
 }
