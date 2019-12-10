@@ -44,7 +44,7 @@ test("github push missing signature", async t => {
       body: githubPushBody
     });
   } catch (e) {
-    t.is(e.statusCode, 400);
+    t.is(e.response.statusCode, 400);
   }
 });
 
@@ -60,7 +60,7 @@ test("github push invalid signature", async t => {
       body: githubPushBody
     });
   } catch (e) {
-    t.is(e.statusCode, 401);
+    t.is(e.response.statusCode, 401);
   }
 });
 
