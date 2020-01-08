@@ -28,7 +28,8 @@
     "docs": "documentation readme src/hook-handler.mjs --section=API",
     "lint": "documentation lint src/hook-handler.mjs",
     "posttest": "markdown-doctest",
-    "test": "ava"
+    "test": "ava",
+    "prepare": "rollup -c"
   },
   "dependencies": {
     "raw-body": "^2.4.1"
