@@ -38,7 +38,7 @@
     "c8": "^7.0.1",
     "documentation": "^12.1.4",
     "esm": "^3.2.25",
-    "got": "^10.0.3",
+    "got": "^10.3.0",
     "koa": "^2.11.0",
     "koa-better-router": "^2.1.1",
     "markdown-doctest": "^1.0.0",
