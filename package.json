@@ -42,7 +42,7 @@
     "koa": "^2.11.0",
     "koa-better-router": "^2.1.1",
     "markdown-doctest": "^1.0.0",
-    "semantic-release": "^16.0.2",
+    "semantic-release": "^16.0.4",
     "x-hub-signature": "^1.2.0"
   },
   "engines": {
