@@ -1,0 +1,10 @@
+{
+  "name": "koa-github-hook-handler",
+  "description": "handle github/gitea/bitbucket webhook requests",
+  "icons": [
+    {
+      "src": "facicon.ico",
+      "sizes": "16x16"
+    }
+  ]
+}
