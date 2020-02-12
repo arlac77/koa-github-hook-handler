@@ -2,7 +2,7 @@ import test from "ava";
 import got from "got";
 import { createBitbucketHookHandler } from "../src/hook-handler.mjs";
 
-import { path, createHookServer } from "./util.mjs";
+import { path, createHookServer } from "./helpers/util.mjs";
 
 let port = 3156;
 

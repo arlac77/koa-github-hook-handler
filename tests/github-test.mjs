@@ -3,7 +3,7 @@ import got from "got";
 import signer from "x-hub-signature/src/signer";
 import { createGithubHookHandler } from "../src/hook-handler.mjs";
 
-import { secret, path, createHookServer } from "./util.mjs";
+import { secret, path, createHookServer } from "./helpers/util.mjs";
 
 let port = 3152;
 
