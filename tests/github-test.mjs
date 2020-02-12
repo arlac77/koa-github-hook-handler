@@ -1,6 +1,6 @@
 import test from "ava";
 import got from "got";
-import signer from "x-hub-signature/src/signer";
+import signer from "x-hub-signature/src/signer.js";
 import { createGithubHookHandler } from "../src/hook-handler.mjs";
 
 import { secret, path, createHookServer } from "./helpers/util.mjs";
