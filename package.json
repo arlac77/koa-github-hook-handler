@@ -36,7 +36,7 @@
     "raw-body": "^2.4.1"
   },
   "devDependencies": {
-    "ava": "^3.8.1",
+    "ava": "^3.8.2",
     "c8": "^7.1.2",
     "documentation": "^12.3.0",
     "got": "^11.0.1",
