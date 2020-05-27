@@ -8,8 +8,7 @@
   "type": "module",
   "main": "./src/hook-handler.mjs",
   "exports": {
-    ".": "./src/hook-handler.mjs",
-    "./": "./"
+    ".": "./src/hook-handler.mjs"
   },
   "description": "handle github/gitea/bitbucket webhook requests",
   "keywords": [
