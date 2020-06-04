@@ -37,7 +37,7 @@
   "devDependencies": {
     "ava": "^3.8.2",
     "c8": "^7.1.2",
-    "documentation": "^13.0.0",
+    "documentation": "^13.0.1",
     "got": "^11.0.1",
     "koa": "^2.11.0",
     "koa-better-router": "^2.1.1",
