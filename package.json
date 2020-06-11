@@ -12,11 +12,11 @@
   },
   "description": "handle github/gitea/bitbucket webhook requests",
   "keywords": [
-    "koa",
+    "bitbucket",
+    "gitea",
     "github",
     "hook",
-    "gitea",
-    "bitbucket"
+    "koa"
   ],
   "contributors": [
     {
@@ -36,7 +36,7 @@
   },
   "devDependencies": {
     "ava": "^3.8.2",
-    "c8": "^7.1.2",
+    "c8": "^7.2.0",
     "documentation": "^13.0.1",
     "got": "^11.0.1",
     "koa": "^2.11.0",
