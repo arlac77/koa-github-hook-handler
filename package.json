@@ -40,7 +40,7 @@
     "ava": "^3.13.0",
     "c8": "^7.3.5",
     "documentation": "github:arlac77/documentation",
-    "got": "^11.0.1",
+    "got": "^11.8.0",
     "koa": "^2.11.0",
     "koa-better-router": "^2.1.1",
     "semantic-release": "^17.2.2",
