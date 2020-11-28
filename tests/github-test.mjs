@@ -66,7 +66,7 @@ test("github push invalid signature", async t => {
 
 test("github push", async t => {
   const sign = signer({ algorithm: "sha1", secret });
-  const signature = sign(new Buffer(githubPushBody));
+  const signature = sign(Buffer.from(githubPushBody));
 
   const response = await got.post(t.context.url, {
     headers: {
