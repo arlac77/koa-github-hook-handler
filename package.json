@@ -5,8 +5,6 @@
     "access": "public"
   },
   "sideEffects": false,
-  "type": "module",
-  "main": "./src/hook-handler.mjs",
   "exports": {
     ".": "./src/hook-handler.mjs"
   },
