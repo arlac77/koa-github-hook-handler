@@ -41,7 +41,7 @@
     "got": "^11.8.1",
     "koa": "^2.11.0",
     "koa-better-router": "^2.1.1",
-    "semantic-release": "^17.3.7",
+    "semantic-release": "^17.3.8",
     "x-hub-signature": "^1.2.0"
   },
   "engines": {
