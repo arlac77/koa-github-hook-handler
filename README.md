@@ -3,7 +3,7 @@
 [![minified size](https://badgen.net/bundlephobia/min/koa-github-hook-handler)](https://bundlephobia.com/result?p=koa-github-hook-handler)
 [![downloads](http://img.shields.io/npm/dm/koa-github-hook-handler.svg?style=flat-square)](https://npmjs.org/package/koa-github-hook-handler)
 [![GitHub Issues](https://img.shields.io/github/issues/arlac77/koa-github-hook-handler.svg?style=flat-square)](https://github.com/arlac77/koa-github-hook-handler/issues)
-[![Build Status](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Farlac77%2Fkoa-github-hook-handler%2Fbadge&style=flat)](https://actions-badge.atrox.dev/arlac77/koa-github-hook-handler/goto)
+[![Build Status](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Farlac77%2Fkoa-github-hook-handler%2Fbadge\&style=flat)](https://actions-badge.atrox.dev/arlac77/koa-github-hook-handler/goto)
 [![Styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 [![Known Vulnerabilities](https://snyk.io/test/github/arlac77/koa-github-hook-handler/badge.svg)](https://snyk.io/test/github/arlac77/koa-github-hook-handler)
@@ -46,16 +46,16 @@ router.addRoute(
 
 ### Table of Contents
 
--   [KoaHandler](#koahandler)
-    -   [Parameters](#parameters)
--   [WebhookHandler](#webhookhandler)
-    -   [Parameters](#parameters-1)
--   [createGithubHookHandler](#creategithubhookhandler)
-    -   [Parameters](#parameters-2)
--   [createGiteaHookHandler](#creategiteahookhandler)
-    -   [Parameters](#parameters-3)
--   [createBitbucketHookHandler](#createbitbuckethookhandler)
-    -   [Parameters](#parameters-4)
+*   [KoaHandler](#koahandler)
+    *   [Parameters](#parameters)
+*   [WebhookHandler](#webhookhandler)
+    *   [Parameters](#parameters-1)
+*   [createGithubHookHandler](#creategithubhookhandler)
+    *   [Parameters](#parameters-2)
+*   [createGiteaHookHandler](#creategiteahookhandler)
+    *   [Parameters](#parameters-3)
+*   [createBitbucketHookHandler](#createbitbuckethookhandler)
+    *   [Parameters](#parameters-4)
 
 ## KoaHandler
 
@@ -63,8 +63,8 @@ Type: [Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Sta
 
 ### Parameters
 
--   `ctx` **Context** 
--   `next` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** 
+*   `ctx` **Context** 
+*   `next` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** 
 
 ## WebhookHandler
 
@@ -72,9 +72,9 @@ Type: [Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Sta
 
 ### Parameters
 
--   `request` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** decoded request body
--   `event` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** from 'x-github-event' header
--   `ctx` **Context** from koa
+*   `request` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** decoded request body
+*   `event` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** from 'x-github-event' header
+*   `ctx` **Context** from koa
 
 ## createGithubHookHandler
 
@@ -82,10 +82,12 @@ Create a koa middleware suitable to bridge github webhook requests to KoaHandler
 
 ### Parameters
 
--   `actions` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** holding all the handles for the events (event is the key)
-    -   `actions.event` **[WebhookHandler](#webhookhandler)** (event is the key)
--   `config` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**  (optional, default `{}`)
-    -   `config.secret` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** to decode signature
+*   `actions` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** holding all the handles for the events (event is the key)
+
+    *   `actions.event` **[WebhookHandler](#webhookhandler)** (event is the key)
+*   `config` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**  (optional, default `{}`)
+
+    *   `config.secret` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** to decode signature
 
 Returns **[KoaHandler](#koahandler)** suitable as koa middleware
 
@@ -95,10 +97,12 @@ Create a koa middleware suitable to bridge gitea webhook requests to KoaHandlers
 
 ### Parameters
 
--   `actions` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** holding all the handles for the events (event is the key)
-    -   `actions.event` **[WebhookHandler](#webhookhandler)** (event is the key)
--   `config` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**  (optional, default `{}`)
-    -   `config.secret` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** to decode signature
+*   `actions` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** holding all the handles for the events (event is the key)
+
+    *   `actions.event` **[WebhookHandler](#webhookhandler)** (event is the key)
+*   `config` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**  (optional, default `{}`)
+
+    *   `config.secret` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** to decode signature
 
 Returns **[KoaHandler](#koahandler)** suitable as koa middleware
 
@@ -108,10 +112,12 @@ Create a koa middleware suitable to bridge gitea webhook requests to KoaHandlers
 
 ### Parameters
 
--   `actions` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** holding all the handles for the events (event is the key)
-    -   `actions.event` **[WebhookHandler](#webhookhandler)** (event is the key)
--   `config` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**  (optional, default `{}`)
-    -   `config.secret` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** to decode signature
+*   `actions` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** holding all the handles for the events (event is the key)
+
+    *   `actions.event` **[WebhookHandler](#webhookhandler)** (event is the key)
+*   `config` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**  (optional, default `{}`)
+
+    *   `config.secret` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** to decode signature
 
 Returns **[KoaHandler](#koahandler)** suitable as koa middleware
 
