@@ -32,7 +32,7 @@
     "lint:docs": "documentation lint ./src/**/*.mjs"
   },
   "dependencies": {
-    "raw-body": "^2.4.1"
+    "raw-body": "^2.5.1"
   },
   "devDependencies": {
     "ava": "^4.0.1",
