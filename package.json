@@ -42,7 +42,7 @@
     "koa": "^2.11.0",
     "koa-better-router": "^2.1.1",
     "semantic-release": "^19.0.5",
-    "x-hub-signature": "^1.2.0"
+    "x-hub-signature": "^2.1.1"
   },
   "engines": {
     "node": ">=14.19.1"
