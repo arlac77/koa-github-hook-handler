@@ -40,7 +40,7 @@
     "got": "^13.0.0",
     "koa": "^2.14.2",
     "koa-better-router": "^2.1.1",
-    "semantic-release": "^21.0.2",
+    "semantic-release": "^21.0.3s",
     "x-hub-signature": "^2.1.1"
   },
   "engines": {
