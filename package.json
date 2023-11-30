@@ -37,7 +37,7 @@
     "ava": "^5.3.1",
     "c8": "^8.0.1",
     "documentation": "^14.0.2",
-    "got": "^13.0.0",
+    "got": "^14.0.0",
     "koa": "^2.14.2",
     "koa-better-router": "^2.1.1",
     "semantic-release": "^22.0.8",
