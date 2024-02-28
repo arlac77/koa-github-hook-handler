@@ -1,5 +1,9 @@
-import { createHmac } from "crypto";
+import { createHmac } from "node:crypto";
 import rawBody from "raw-body";
+
+/**
+ * @typedef {Object} Context
+ */
 
 /**
  * @typedef {Function} KoaHandler
@@ -17,12 +21,13 @@ import rawBody from "raw-body";
 /**
  * Create a koa middleware suitable to bridge github webhook requests to KoaHandlers
  * @param {Object} actions holding all the handles for the events (event is the key)
- * @param {WebhookHandler} actions.event  (event is the key)
+ * @param {Function} actions.default default action
+ * @param {WebhookHandler} actions.event (event is the key)
  * @param {Object} config
  * @param {string} config.secret to decode signature
  * @return {KoaHandler} suitable as koa middleware
  */
-export function createGithubHookHandler(actions, config = {}) {
+export function createGithubHookHandler(actions, config) {
   return async (ctx, next) => {
     const [sig, event, id] = headers(ctx, [
       "x-hub-signature",
@@ -51,12 +56,13 @@ export function createGithubHookHandler(actions, config = {}) {
 /**
  * Create a koa middleware suitable to bridge gitea webhook requests to KoaHandlers
  * @param {Object} actions holding all the handles for the events (event is the key)
- * @param {WebhookHandler} actions.event  (event is the key)
+ * @param {Function} actions.default default action
+ * @param {WebhookHandler} actions.event (event is the key)
  * @param {Object} config
  * @param {string} config.secret to decode signature
  * @return {KoaHandler} suitable as koa middleware
  */
-export function createGiteaHookHandler(actions, config = {}) {
+export function createGiteaHookHandler(actions, config) {
   return async (ctx, next) => {
     const [event, id] = headers(ctx, ["x-gitea-event", "x-gitea-delivery"]);
 
@@ -81,12 +87,13 @@ export function createGiteaHookHandler(actions, config = {}) {
 /**
  * Create a koa middleware suitable to bridge gitea webhook requests to KoaHandlers
  * @param {Object} actions holding all the handles for the events (event is the key)
- * @param {WebhookHandler} actions.event  (event is the key)
+ * @param {Function} actions.default default action
+ * @param {WebhookHandler} actions.event (event is the key)
  * @param {Object} config
  * @param {string} config.secret to decode signature
  * @return {KoaHandler} suitable as koa middleware
  */
-export function createBitbucketHookHandler(actions, config = {}) {
+export function createBitbucketHookHandler(actions, config) {
   return async (ctx, next) => {
     const [event] = headers(ctx, ["X-Event-Key"]);
 

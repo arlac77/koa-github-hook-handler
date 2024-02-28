@@ -1,8 +1,7 @@
 import test from "ava";
 import got from "got";
-import signer from "x-hub-signature/src/signer.js";
+import XHubSignature from "x-hub-signature";
 import { createGithubHookHandler } from "../src/hook-handler.mjs";
-
 import { secret, path, createHookServer } from "./helpers/util.mjs";
 
 let port = 3152;
@@ -65,8 +64,8 @@ test("github push invalid signature", async t => {
 });
 
 test("github push", async t => {
-  const sign = signer({ algorithm: "sha1", secret });
-  const signature = sign(Buffer.from(githubPushBody));
+  const signer = new XHubSignature("sha1", secret);
+  const signature = signer.sign(Buffer.from(githubPushBody));
 
   const response = await got.post(t.context.url, {
     headers: {

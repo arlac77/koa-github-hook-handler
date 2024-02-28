@@ -1,4 +1,4 @@
-import { createServer } from "http";
+import { createServer } from "node:http";
 import Koa from "koa";
 import Router from "koa-better-router";
 

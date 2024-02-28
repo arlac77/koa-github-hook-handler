@@ -1,7 +1,6 @@
 import test from "ava";
 import got from "got";
 import { createGiteaHookHandler } from "../src/hook-handler.mjs";
-
 import { secret, path, createHookServer } from "./helpers/util.mjs";
 
 let port = 3155;

@@ -5,8 +5,12 @@
     "access": "public",
     "provenance": true
   },
+  "types": "./types/hook-handler.d.mts",
   "exports": {
-    ".": "./src/hook-handler.mjs"
+    ".": {
+      "default": "./src/hook-handler.mjs",
+      "types": "./types/hook-handler.d.mts"
+    }
   },
   "description": "handle github/gitea/bitbucket webhook requests",
   "keywords": [
@@ -37,6 +41,7 @@
     "raw-body": "^2.5.1"
   },
   "devDependencies": {
+    "@types/node": "^20.11.22",
     "ava": "^6.1.2",
     "c8": "^9.1.0",
     "documentation": "^14.0.3",
@@ -48,7 +53,7 @@
     "x-hub-signature": "^2.1.1"
   },
   "engines": {
-    "node": ">=14.19.1"
+    "node": ">=20.11.1"
   },
   "repository": {
     "type": "git",
