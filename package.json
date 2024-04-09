@@ -49,7 +49,7 @@
     "got": "^14.2.1",
     "koa": "^2.15.2",
     "koa-better-router": "^2.1.1",
-    "semantic-release": "^23.0.7",
+    "semantic-release": "^23.0.8",
     "typescript": "^5.4.4",
     "x-hub-signature": "^2.1.2"
   },
