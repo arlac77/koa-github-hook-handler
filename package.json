@@ -50,7 +50,7 @@
     "koa": "^2.15.3",
     "koa-better-router": "^2.1.1",
     "semantic-release": "^24.0.0",
-    "typescript": "^5.5.2",
+    "typescript": "^5.5.3",
     "x-hub-signature": "^2.1.2"
   },
   "engines": {
