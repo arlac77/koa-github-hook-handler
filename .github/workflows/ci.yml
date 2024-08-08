@@ -28,7 +28,6 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: npm
-      - run: npm ci
       - name: checkout
         run: npm ci
       - run: npm run cover --if-present
@@ -58,7 +57,6 @@ jobs:
           cache-dependency-path: package-lock.json
       - name: checkout
         run: npm ci
-      - run: npm ci
       - run: npx semantic-release
         env:
           CI: "true"
