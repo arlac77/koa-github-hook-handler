@@ -33,7 +33,8 @@ jobs:
           cache: npm
       - name: checkout
         run: npm ci
-      - run: npm run cover --if-present
+      - name: test and coverage
+        run: npm run cover --if-present
       - name: coveralls
         uses: coverallsapp/github-action@v2
         with:
