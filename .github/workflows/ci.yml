@@ -31,7 +31,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: npm
-      - name: checkout
+      - name: install
         run: npm ci
       - name: test and coverage
         run: npm run cover --if-present
@@ -61,7 +61,7 @@ jobs:
           node-version: 22.6.0
           cache: npm
           cache-dependency-path: package-lock.json
-      - name: checkout
+      - name: install
         run: npm ci
       - name: release
         run: npx semantic-release
