@@ -8,8 +8,8 @@
   "types": "./types/hook-handler.d.mts",
   "exports": {
     ".": {
-      "default": "./src/hook-handler.mjs",
-      "types": "./types/hook-handler.d.mts"
+      "types": "./types/hook-handler.d.mts",
+      "default": "./src/hook-handler.mjs"
     }
   },
   "description": "handle github/gitea/bitbucket webhook requests",
