@@ -27,7 +27,7 @@ jobs:
           cache: npm
           cache-dependency-path: package-lock.json
       - name: prepare node
-        uses: actions/setup-node@v4.1.0
+        uses: actions/setup-node@v4.2.0
         with:
           node-version: ${{ matrix.node-version }}
           cache: npm
