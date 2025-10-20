@@ -50,7 +50,7 @@
     "got": "^14.6.0",
     "koa": "^3.0.2",
     "koa-better-router": "^2.1.1",
-    "semantic-release": "^25.0.0",
+    "semantic-release": "^25.0.1",
     "typescript": "^5.9.3",
     "x-hub-signature": "^2.1.2"
   },
