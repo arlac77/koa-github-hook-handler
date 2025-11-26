@@ -64,7 +64,7 @@
   "bugs": {
     "url": "https://github.com/arlac77/koa-github-hook-handler/issues"
   },
-  "homepage": "https://github.com/arlac77/koa-github-hook-handler#readme",
+  "homepage": "",
   "template": {
     "inheritFrom": [
       "arlac77/template-arlac77-github",
