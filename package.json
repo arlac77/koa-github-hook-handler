@@ -48,7 +48,7 @@
     "c8": "^11.0.0",
     "documentation": "^14.0.3",
     "got": "^14.6.6",
-    "koa": "^3.1.2",
+    "koa": "^3.2.0",
     "koa-better-router": "^2.1.1",
     "semantic-release": "^25.0.3",
     "typescript": "^6.0.2",
