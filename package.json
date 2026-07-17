@@ -54,11 +54,6 @@
     "typescript": "^7.0.2",
     "x-hub-signature": "^2.1.2"
   },
-  "overrides": {
-    "c8": {
-      "yargs": "^18.0.0"
-    }
-  },
   "engines": {
     "node": ">=20.18.0"
   },
